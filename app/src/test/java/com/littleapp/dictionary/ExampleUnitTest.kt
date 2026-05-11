@@ -1,4 +1,4 @@
-package com.example.dictionary_littleapp
+package com.littleapp.dictionary
 
 import org.junit.Test
 

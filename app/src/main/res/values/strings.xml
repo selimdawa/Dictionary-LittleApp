@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Dictionary - Little App</string>
+
+    //Theme
+    <string name="basic_theme">Basic Theme</string>
+    <string name="sec_theme">Sec Theme</string>
+
+    <string name="hint_search">Enter your word</string>
+    <string name="button_find">find</string>
 </resources>
