@@ -9,17 +9,23 @@ import com.littleapp.dictionary.databinding.ActivityDefinitionWordBinding
 
 class DefinitionWordActivity : AppCompatActivity() {
 
-    private var binding: ActivityDefinitionWordBinding? = null
+    private var _binding: ActivityDefinitionWordBinding? = null
+    private val binding get() = _binding!!
+
     var context: Context = this@DefinitionWordActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityDefinitionWordBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        _binding = ActivityDefinitionWordBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        binding!!.toolbar.nameSpace.text = DATA.meaning_of_the_word
-        binding!!.tvDefinition.text = intent.getStringExtra(DATA.DICTIONARY_KEY)
+        binding.toolbar.nameSpace.text = DATA.meaning_of_the_word
+        binding.tvDefinition.text = intent.getStringExtra(DATA.DICTIONARY_KEY)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
