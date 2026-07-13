@@ -3,10 +3,12 @@ package com.littleapp.dictionary.Activity
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import com.littleapp.dictionary.Unit.DATA
 import com.littleapp.dictionary.Unit.THEME
 import com.littleapp.dictionary.databinding.ActivityDefinitionWordBinding
 
+@AndroidEntryPoint
 class DefinitionWordActivity : AppCompatActivity() {
 
     private var _binding: ActivityDefinitionWordBinding? = null

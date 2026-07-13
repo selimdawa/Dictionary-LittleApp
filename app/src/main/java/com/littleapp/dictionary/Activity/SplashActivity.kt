@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import com.littleapp.dictionary.Unit.CLASS
 import com.littleapp.dictionary.Unit.THEME
 import com.littleapp.dictionary.Unit.VOID
 import com.littleapp.dictionary.databinding.ActivitySplashBinding
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
     private var _binding: ActivitySplashBinding? = null
