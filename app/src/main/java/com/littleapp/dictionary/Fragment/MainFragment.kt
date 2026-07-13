@@ -6,20 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
-import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import com.littleapp.dictionary.R
 import com.littleapp.dictionary.Unit.DATA
+import com.littleapp.dictionary.ViewModel.MainViewModel
 import com.littleapp.dictionary.databinding.FragmentMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONArray
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: MainViewModel by hiltNavGraphViewModels(R.id.nav_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,39 +33,28 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.nameSpace.text = DATA.DICTIONARY
-        binding.findButton.setOnClickListener { stringRequest() }
-    }
-
-    private fun extractDefinitionFromJson(response: String) {
-        val jsonArray = JSONArray(response)
-        val firstIndex = jsonArray.getJSONObject(0)
-        val getShotDefinition = firstIndex.getJSONArray(DATA.Short_Def)
-        val firstShortDefinition = getShotDefinition.get(0)
-
-        val action = MainFragmentDirections.actionMainFragmentToDefinitionWordFragment(firstShortDefinition.toString())
-        findNavController().navigate(action)
-    }
-
-    private fun getUrl(): String {
-        val word = binding.searchEditText.text
-        val apiKey = DATA.DICTIONARY_API_KEY
-        val basicUrl = DATA.DICTIONARY_BASIC_URL
-        return "$basicUrl$word?key=$apiKey"
-    }
-
-    private fun stringRequest() {
-        val url = getUrl()
-        val queue = Volley.newRequestQueue(requireContext())
-        val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            try {
-                extractDefinitionFromJson(response)
-            } catch (exception: Exception) {
-                exception.printStackTrace()
+        
+        binding.findButton.setOnClickListener {
+            val word = binding.searchEditText.text.toString()
+            if (word.isNotEmpty()) {
+                viewModel.searchWord(word)
+            } else {
+                Toast.makeText(requireContext(), "Please enter a word", Toast.LENGTH_SHORT).show()
             }
-        }, { error ->
-            Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
-        })
-        queue.add(stringRequest)
+        }
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.definition.observe(viewLifecycleOwner) { _ ->
+            // The data is already in the Shared ViewModel
+            findNavController().navigate(R.id.action_mainFragment_to_definitionWordFragment)
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

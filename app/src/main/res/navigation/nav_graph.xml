@@ -19,9 +19,5 @@
         android:id="@+id/definitionWordFragment"
         android:name="com.littleapp.dictionary.Fragment.DefinitionWordFragment"
         android:label="DefinitionWordFragment"
-        tools:layout="@layout/fragment_definition_word">
-        <argument
-            android:name="word_definition"
-            app:argType="string" />
-    </fragment>
+        tools:layout="@layout/fragment_definition_word" />
 </navigation>

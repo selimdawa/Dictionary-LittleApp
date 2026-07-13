@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.navArgs
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import com.littleapp.dictionary.R
 import com.littleapp.dictionary.Unit.DATA
+import com.littleapp.dictionary.ViewModel.MainViewModel
 import com.littleapp.dictionary.databinding.FragmentDefinitionWordBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +17,9 @@ class DefinitionWordFragment : Fragment() {
 
     private var _binding: FragmentDefinitionWordBinding? = null
     private val binding get() = _binding!!
-    private val args: DefinitionWordFragmentArgs by navArgs()
+
+    // Accessing the same ViewModel instance scoped to the NavGraph
+    private val viewModel: MainViewModel by hiltNavGraphViewModels(R.id.nav_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +32,10 @@ class DefinitionWordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.nameSpace.text = DATA.meaning_of_the_word
-        binding.tvDefinition.text = args.wordDefinition
+        
+        viewModel.definition.observe(viewLifecycleOwner) { definition ->
+            binding.tvDefinition.text = definition
+        }
     }
 
     override fun onDestroyView() {
