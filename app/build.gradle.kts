@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.dagger.hilt.android)
-    alias(libs.plugins.navigation.safeargs.kotlin)
 }
 
 android {
@@ -40,15 +39,12 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.preference.ktx)           //Shared Preference
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     //Layout
-    implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
     //Lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
