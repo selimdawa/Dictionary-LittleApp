@@ -11,7 +11,7 @@ coroutines = "1.11.0"
 lifecycle = "2.11.0"
 room = "2.8.4"
 navigation = "2.9.8"
-ksp = "2.3.8"
+ksp = "2.3.10"
 hilt = "2.60.1"
 hiltNavigation = "1.4.0"
 
@@ -46,3 +46,4 @@ volley = { module = "com.android.volley:volley", version.ref = "volley" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+
